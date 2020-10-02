@@ -54,7 +54,28 @@ all the work that you do.
 Running tests
 ^^^^^^^^^^^^^
 
-First ensure pytest and its plugins are installed by:
+The easiest way to ensure that tests do not unnecessarily fail is to create a 
+dedicated conda environment:
+
+.. code:: bash
+   # From a hyperspy local development directory
+   $ conda env create -f conda_environment.yml # creates test_env environment
+   $ conda env update -f conda_environment_dev.yml # specifically updates the test_env environment
+   $ conda activate test_env
+   $ pip install -e . # this installs hyperspy in development mode
+
+One can also update a current directory with the appropriate packages. This can be 
+useful to after pulling recent changes to your development branch, in order to ensure
+you are using the most up-to-date tools and versions.
+
+.. code:: bash
+   # From a hyperspy local development directory
+   $ conda env update -f conda_environment.yml -n your-environment-name # ensure hyperspy packages installed
+   $ conda env update -f conda_environment_dev.yml -n your-environment-name # ensure test packages installed
+   $ pip install -e . # ensure development install is used
+   
+Alternatively, if one does not use conda or wishes to have more control,
+ensure pytest and its plugins are installed by:
 
 .. code:: bash
 
@@ -67,7 +88,7 @@ First ensure pytest and its plugins are installed by:
    # Or just installing the dependencies using conda
    $ conda install -c conda-forge pytest pytest-mpl
 
-To run them:
+To run the tests:
 
 .. code:: bash
 
@@ -88,7 +109,7 @@ Or, from HyperSpy's project folder, simply:
 The HyperSpy test suite can also be run in parallel if you have multiple CPUs
 available, using the ```pytest-xdist`` plugin <https://pypi.org/project/pytest-xdist/>`_.
 If you have the plugin installed, HyperSpy will automatically run the test suite in
-parallel on your machine.
+parallel on your machine on all cores. The parallel behaviour can be controlled:
 
 .. code:: bash
 
